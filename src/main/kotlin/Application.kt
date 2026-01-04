@@ -6,7 +6,7 @@ import danis.galimullin.presentation.config.JwtConfig
 import danis.galimullin.presentation.route.auth.authRouting
 import presentation.route.task.taskRouting
 import danis.galimullin.presentation.route.user.userRouting
-import data.db.DatabaseFactory
+import data.db.DatabaseInitializer
 import infrastructure.di.diModule
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     // Инициализация базы
-    DatabaseFactory.init()
+    DatabaseInitializer.init()
 
     // DI через Koin
     installKoin()
