@@ -1,0 +1,30 @@
+services:
+  postgresql:
+    container_name: todo_postgresql
+    image: postgres:16
+    environment:
+      POSTGRES_DB: todo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - todo_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  backend:
+    container_name: ktor-todo-backend
+    build: .
+    ports:
+      - "9009:8080"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+
+volumes:
+  todo_postgres_data:
