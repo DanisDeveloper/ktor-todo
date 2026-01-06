@@ -61,6 +61,20 @@ class TaskRepositoryImpl : TaskRepository {
         }
     }
 
+    override suspend fun toggle(taskId: Long) {
+        transaction {
+            val current = TasksTable
+                .slice(TasksTable.isCompleted)
+                .select { TasksTable.id eq taskId }
+                .singleOrNull()?.get(TasksTable.isCompleted)
+                ?: throw IllegalArgumentException("Task not found")
+
+            TasksTable.update({ TasksTable.id eq taskId }) {
+                it[isCompleted] = !current
+            }
+        }
+    }
+
     override suspend fun delete(taskId: Long) {
         transaction {
             TasksTable.deleteWhere { TasksTable.id eq taskId }

@@ -10,6 +10,7 @@ import danis.galimullin.domain.usecase.auth.LoginUserUseCase
 import danis.galimullin.domain.usecase.auth.RegisterUserUseCase
 import danis.galimullin.domain.usecase.task.CreateTaskUseCase
 import danis.galimullin.domain.usecase.task.DeleteUserTaskUseCase
+import danis.galimullin.domain.usecase.task.ToggleTaskUseCase
 import domain.usecase.task.UpdateUserTaskUseCase
 import danis.galimullin.domain.usecase.user.GetUserByIdUseCase
 import data.repository.TaskRepositoryImpl
@@ -18,7 +19,7 @@ import domain.repository.TaskRepository
 import domain.usecase.GetUserTasksUseCase
 
 
-val diModule = module {
+val appModule = module {
     // Repositories
     single<UserRepository> { UserRepositoryImpl() }
     single<TaskRepository> { TaskRepositoryImpl() }
@@ -28,13 +29,15 @@ val diModule = module {
     single<TokenService> { JwtTokenService() }
 
     // Auth useCases
-    single { RegisterUserUseCase(get(), get()) } // get() берёт UserRepository и PasswordHasher
+    single { RegisterUserUseCase(get(), get(), get()) } // get() берёт UserRepository и PasswordHasher
     single { LoginUserUseCase(get(), get(), get()) } // UserRepository, PasswordHasher, JwtTokenService
 
     // Task useCases
     single { CreateTaskUseCase(get()) }
     single { GetUserTasksUseCase(get()) }
+    single{ GetUserByIdUseCase(get()) }
     single { UpdateUserTaskUseCase(get()) }
+    single { ToggleTaskUseCase(get()) }
     single { DeleteUserTaskUseCase(get()) }
 
     // User useCases

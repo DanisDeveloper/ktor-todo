@@ -1,7 +1,7 @@
 package domain.usecase.task
 
 import danis.galimullin.Task
-import danis.galimullin.domain.usecase.task.GetTaskByIdUseCase
+import danis.galimullin.domain.usecase.task.GetUserTaskByIdUseCase
 import domain.repository.TaskRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -12,7 +12,7 @@ import io.mockk.mockk
 
 class GetTaskByIdUseCase : StringSpec({
     val repository = mockk<TaskRepository>()
-    val useCase = GetTaskByIdUseCase(repository)
+    val useCase = GetUserTaskByIdUseCase(repository)
 
     "should return a success result when getting task by id" {
         val title = "new task"

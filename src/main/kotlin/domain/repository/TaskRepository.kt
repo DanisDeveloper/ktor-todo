@@ -7,5 +7,7 @@ interface TaskRepository {
     suspend fun getById(taskId: Long): Task?
     suspend fun create(task: Task): Task
     suspend fun update(task: Task)
+    suspend fun toggle(taskId: Long)
+
     suspend fun delete(taskId: Long)
 }

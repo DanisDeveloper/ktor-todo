@@ -3,9 +3,6 @@ package data.db
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import danis.galimullin.presentation.config.DatabaseConfig
-import liquibase.Contexts
-import liquibase.LabelExpression
-import liquibase.Liquibase
 import liquibase.command.CommandScope
 import liquibase.command.core.UpdateCommandStep
 import liquibase.database.DatabaseFactory

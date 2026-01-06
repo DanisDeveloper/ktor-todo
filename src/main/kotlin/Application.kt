@@ -7,18 +7,23 @@ import danis.galimullin.presentation.route.auth.authRouting
 import presentation.route.task.taskRouting
 import danis.galimullin.presentation.route.user.userRouting
 import data.db.DatabaseInitializer
-import infrastructure.di.diModule
+import infrastructure.di.appModule
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.plugins.calllogging.CallLogging
+import io.ktor.server.plugins.calllogging.processingTimeMillis
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.uri
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
+import org.slf4j.event.Level
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -27,6 +32,18 @@ fun main(args: Array<String>) {
 fun Application.module() {
     // Инициализация базы
     DatabaseInitializer.init()
+
+    install(CallLogging) {
+        level = Level.INFO
+
+        format { call ->
+            val status = call.response.status()
+            val httpMethod = call.request.httpMethod.value
+            val uri = call.request.uri
+            val duration = call.processingTimeMillis()
+            "Status: $status, HTTP: $httpMethod, URI: $uri, Duration: ${duration}ms"
+        }
+    }
 
     // DI через Koin
     installKoin()
@@ -45,7 +62,7 @@ fun Application.module() {
 private fun Application.installKoin() {
     install(Koin) {
         slf4jLogger()
-        modules(diModule)
+        modules(appModule)
     }
 }
 

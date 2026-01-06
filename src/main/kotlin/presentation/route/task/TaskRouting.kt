@@ -2,6 +2,8 @@ package presentation.route.task
 
 import danis.galimullin.domain.usecase.task.CreateTaskUseCase
 import danis.galimullin.domain.usecase.task.DeleteUserTaskUseCase
+import danis.galimullin.domain.usecase.task.GetUserTaskByIdUseCase
+import danis.galimullin.domain.usecase.task.ToggleTaskUseCase
 import domain.usecase.task.UpdateUserTaskUseCase
 import danis.galimullin.presentation.route.task.dto.CreateTaskDTO
 import danis.galimullin.presentation.route.task.dto.UpdateTaskDTO
@@ -18,14 +20,21 @@ import org.koin.ktor.ext.inject
 
 fun Route.taskRouting() {
     val getUserTasksUseCase by inject<GetUserTasksUseCase>()
+    val getUserTaskByIdUseCase by inject<GetUserTaskByIdUseCase>()
     val createTaskUseCase by inject<CreateTaskUseCase>()
     val updateUserTaskUseCase by inject<UpdateUserTaskUseCase>()
+    val toggleTaskUseCase by inject<ToggleTaskUseCase>()
     val deleteUserTaskUseCase by inject<DeleteUserTaskUseCase>()
+
     authenticate("auth-jwt") {
         route("/tasks") {
             get {
                 val tasks = getUserTasksUseCase(call.userId())
                 call.respond(tasks)
+            }
+            get("/tasks/{id}") {
+                val task = getUserTaskByIdUseCase(call.taskId())
+                call.respond(task)
             }
 
             post {
@@ -35,12 +44,19 @@ fun Route.taskRouting() {
             }
 
             put("/{task_id}") {
+                // TODO сделать проверку, что автор задачи - текущий пользователь
                 val taskDto = call.receive<UpdateTaskDTO>()
-                updateUserTaskUseCase(call.taskId(), taskDto.title, taskDto.is_completed)
+                updateUserTaskUseCase(call.taskId(), taskDto.title)
                 call.respond(HttpStatusCode.OK, mapOf("status" to "updated"))
             }
 
+            patch("/{task_id}/toggle") {
+                toggleTaskUseCase(call.taskId())
+                call.respond(HttpStatusCode.OK, mapOf("status" to "toggled"))
+            }
+
             delete("/{task_id}") {
+                // TODO сделать проверку, что автор задачи - текущий пользователь
                 deleteUserTaskUseCase(call.taskId())
                 call.respond(HttpStatusCode.OK, mapOf("status" to "deleted"))
             }

@@ -6,14 +6,12 @@ import io.ktor.server.plugins.NotFoundException
 class UpdateUserTaskUseCase(private val repository: TaskRepository) {
     suspend operator fun invoke(
         taskId: Long,
-        title: String?,
-        isCompleted: Boolean?
+        title: String,
     ) {
         val task = repository.getById(taskId) ?: throw NotFoundException()
 
         val updatedTask = task.copy(
-            title = title ?: task.title,
-            isCompleted = isCompleted ?: task.isCompleted
+            title = title,
         )
 
         repository.update(updatedTask)

@@ -40,6 +40,7 @@ dependencies {
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
     implementation("org.liquibase:liquibase-core:4.25.1")
     // Logging
+    implementation("io.ktor:ktor-server-call-logging-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
     // Database
