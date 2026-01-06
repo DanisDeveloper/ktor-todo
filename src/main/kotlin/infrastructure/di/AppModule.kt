@@ -9,14 +9,14 @@ import infrastructure.security.api.TokenService
 import danis.galimullin.domain.usecase.auth.LoginUserUseCase
 import danis.galimullin.domain.usecase.auth.RegisterUserUseCase
 import danis.galimullin.domain.usecase.task.CreateTaskUseCase
-import danis.galimullin.domain.usecase.task.DeleteUserTaskUseCase
-import danis.galimullin.domain.usecase.task.ToggleTaskUseCase
+import domain.usecase.task.DeleteUserTaskUseCase
+import domain.usecase.task.ToggleTaskUseCase
 import domain.usecase.task.UpdateUserTaskUseCase
 import danis.galimullin.domain.usecase.user.GetUserByIdUseCase
 import data.repository.TaskRepositoryImpl
 import data.repository.UserRepositoryImpl
 import domain.repository.TaskRepository
-import domain.usecase.GetUserTasksUseCase
+import domain.usecase.task.GetUserTasksUseCase
 
 
 val appModule = module {

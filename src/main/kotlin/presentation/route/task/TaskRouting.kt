@@ -1,13 +1,13 @@
 package presentation.route.task
 
 import danis.galimullin.domain.usecase.task.CreateTaskUseCase
-import danis.galimullin.domain.usecase.task.DeleteUserTaskUseCase
-import danis.galimullin.domain.usecase.task.GetUserTaskByIdUseCase
-import danis.galimullin.domain.usecase.task.ToggleTaskUseCase
+import domain.usecase.task.DeleteUserTaskUseCase
+import domain.usecase.task.GetUserTaskByIdUseCase
+import domain.usecase.task.ToggleTaskUseCase
 import domain.usecase.task.UpdateUserTaskUseCase
 import danis.galimullin.presentation.route.task.dto.CreateTaskDTO
 import danis.galimullin.presentation.route.task.dto.UpdateTaskDTO
-import domain.usecase.GetUserTasksUseCase
+import domain.usecase.task.GetUserTasksUseCase
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.authenticate
@@ -33,7 +33,7 @@ fun Route.taskRouting() {
                 call.respond(tasks)
             }
             get("/tasks/{id}") {
-                val task = getUserTaskByIdUseCase(call.taskId())
+                val task = getUserTaskByIdUseCase(call.taskId(), call.userId())
                 call.respond(task)
             }
 
@@ -44,20 +44,18 @@ fun Route.taskRouting() {
             }
 
             put("/{task_id}") {
-                // TODO сделать проверку, что автор задачи - текущий пользователь
                 val taskDto = call.receive<UpdateTaskDTO>()
-                updateUserTaskUseCase(call.taskId(), taskDto.title)
+                updateUserTaskUseCase(call.taskId(), taskDto.title, call.userId())
                 call.respond(HttpStatusCode.OK, mapOf("status" to "updated"))
             }
 
             patch("/{task_id}/toggle") {
-                toggleTaskUseCase(call.taskId())
+                toggleTaskUseCase(call.taskId(), call.userId())
                 call.respond(HttpStatusCode.OK, mapOf("status" to "toggled"))
             }
 
             delete("/{task_id}") {
-                // TODO сделать проверку, что автор задачи - текущий пользователь
-                deleteUserTaskUseCase(call.taskId())
+                deleteUserTaskUseCase(call.taskId(), call.userId())
                 call.respond(HttpStatusCode.OK, mapOf("status" to "deleted"))
             }
         }

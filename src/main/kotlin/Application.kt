@@ -2,6 +2,7 @@ package danis.galimullin
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import danis.galimullin.domain.exception.ForbiddenException
 import danis.galimullin.presentation.config.JwtConfig
 import danis.galimullin.presentation.route.auth.authRouting
 import presentation.route.task.taskRouting
@@ -73,6 +74,9 @@ private fun Application.installStatusPages() {
         }
         exception<Throwable> { call, cause ->
             call.respond(HttpStatusCode.InternalServerError, mapOf("error" to (cause.message ?: "Server Error")))
+        }
+        exception<ForbiddenException> { call, _ ->
+            call.respond(HttpStatusCode.Forbidden)
         }
     }
 }

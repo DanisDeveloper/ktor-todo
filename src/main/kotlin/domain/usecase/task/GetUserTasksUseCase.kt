@@ -1,4 +1,4 @@
-package domain.usecase
+package domain.usecase.task
 
 import danis.galimullin.Task
 import domain.repository.TaskRepository

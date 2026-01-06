@@ -2,7 +2,6 @@ package domain.usecase.task
 
 import danis.galimullin.Task
 import domain.repository.TaskRepository
-import domain.usecase.GetUserTasksUseCase
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -10,7 +9,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 
-class GetUserTasksUseCase : StringSpec({
+class GetUserTasksUseCaseTest : StringSpec({
     val repository = mockk<TaskRepository>()
     val useCase = GetUserTasksUseCase(repository)
 

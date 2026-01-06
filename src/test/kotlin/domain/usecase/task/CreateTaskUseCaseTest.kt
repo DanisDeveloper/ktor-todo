@@ -3,14 +3,12 @@ package domain.usecase.task
 import danis.galimullin.Task
 import danis.galimullin.domain.usecase.task.CreateTaskUseCase
 import domain.repository.TaskRepository
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.ktor.server.plugins.NotFoundException
 import io.mockk.coEvery
 import io.mockk.mockk
 
-class CreateTaskUseCase : StringSpec({
+class CreateTaskUseCaseTest : StringSpec({
     val repository = mockk<TaskRepository>()
     val useCase = CreateTaskUseCase(repository)
 
