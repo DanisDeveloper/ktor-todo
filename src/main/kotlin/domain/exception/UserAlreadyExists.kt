@@ -1,3 +1,3 @@
-package danis.galimullin.domain.usecase.exceptions
+package danis.galimullin.domain.exception
 
 class UserAlreadyExists : RuntimeException("User already exists")

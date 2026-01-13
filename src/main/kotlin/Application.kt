@@ -3,7 +3,7 @@ package danis.galimullin
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import danis.galimullin.domain.exception.ForbiddenException
-import danis.galimullin.presentation.config.JwtConfig
+import danis.galimullin.infrastructure.security.JwtConfig
 import danis.galimullin.presentation.route.auth.authRouting
 import presentation.route.task.taskRouting
 import danis.galimullin.presentation.route.user.userRouting

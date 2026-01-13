@@ -53,6 +53,8 @@ dependencies {
 
     implementation("org.mindrot:jbcrypt:0.4")
 
+    implementation("io.lettuce:lettuce-core:7.2.1.RELEASE")
+
     // Test
     testImplementation("io.ktor:ktor-server-test-host:${ktor_version}")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

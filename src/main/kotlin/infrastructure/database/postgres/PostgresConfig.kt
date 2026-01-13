@@ -1,9 +1,9 @@
-package danis.galimullin.presentation.config
+package danis.galimullin.infrastructure.data.database
 
 import com.typesafe.config.ConfigFactory
 import io.ktor.server.config.HoconApplicationConfig
 
-object DatabaseConfig {
+object PostgresConfig {
     private val config = HoconApplicationConfig(ConfigFactory.load()).config("ktor.database")
 
     val url = config.property("url").getString()

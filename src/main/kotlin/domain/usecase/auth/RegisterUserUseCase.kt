@@ -1,9 +1,8 @@
 package danis.galimullin.domain.usecase.auth
 
-import danis.galimullin.User
 import danis.galimullin.domain.repository.UserRepository
 import infrastructure.security.api.PasswordHasher
-import danis.galimullin.domain.usecase.exceptions.UserAlreadyExists
+import danis.galimullin.domain.exception.UserAlreadyExists
 import infrastructure.security.api.TokenService
 
 class RegisterUserUseCase(

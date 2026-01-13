@@ -13,16 +13,22 @@ import domain.usecase.task.DeleteUserTaskUseCase
 import domain.usecase.task.ToggleTaskUseCase
 import domain.usecase.task.UpdateUserTaskUseCase
 import danis.galimullin.domain.usecase.user.GetUserByIdUseCase
-import data.repository.TaskRepositoryImpl
-import data.repository.UserRepositoryImpl
+import danis.galimullin.infrastructure.database.repository.TaskRepositoryImpl
+import danis.galimullin.infrastructure.database.repository.UserRepositoryImpl
+import domain.repository.TaskCache
 import domain.repository.TaskRepository
 import domain.usecase.task.GetUserTasksUseCase
+import infrastructure.database.redis.RedisManager
+import infrastructure.database.redis.RedisTaskCache
 
 
 val appModule = module {
+    single{ RedisManager }
+
     // Repositories
     single<UserRepository> { UserRepositoryImpl() }
     single<TaskRepository> { TaskRepositoryImpl() }
+    single<TaskCache> { RedisTaskCache(get()) }
 
     // Security
     single<PasswordHasher> { BCryptPasswordHasher() }

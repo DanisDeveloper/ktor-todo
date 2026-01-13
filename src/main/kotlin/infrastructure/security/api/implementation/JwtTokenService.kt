@@ -3,7 +3,7 @@ package infrastructure.security.implementation
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import infrastructure.security.api.TokenService
-import danis.galimullin.presentation.config.JwtConfig
+import danis.galimullin.infrastructure.security.JwtConfig
 import java.util.Date
 
 class JwtTokenService : TokenService {

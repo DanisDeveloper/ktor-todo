@@ -1,4 +1,4 @@
-package data.repository
+package danis.galimullin.infrastructure.database.repository
 
 import danis.galimullin.User
 import danis.galimullin.domain.repository.UserRepository

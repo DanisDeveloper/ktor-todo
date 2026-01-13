@@ -2,7 +2,7 @@ package data.db
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import danis.galimullin.presentation.config.DatabaseConfig
+import danis.galimullin.infrastructure.data.database.PostgresConfig
 import liquibase.command.CommandScope
 import liquibase.command.core.UpdateCommandStep
 import liquibase.database.DatabaseFactory
@@ -15,10 +15,10 @@ object DatabaseInitializer {
 
     fun createDataSource(): HikariDataSource {
         val config = HikariConfig().apply {
-            jdbcUrl = DatabaseConfig.url
-            driverClassName = DatabaseConfig.driver
-            username = DatabaseConfig.user
-            password = DatabaseConfig.password
+            jdbcUrl = PostgresConfig.url
+            driverClassName = PostgresConfig.driver
+            username = PostgresConfig.user
+            password = PostgresConfig.password
             maximumPoolSize = 10
             isAutoCommit = false
             transactionIsolation = "TRANSACTION_REPEATABLE_READ"
@@ -45,6 +45,5 @@ object DatabaseInitializer {
         val dataSource = createDataSource()
         migrate(dataSource)
         Database.connect(dataSource)
-
     }
 }
